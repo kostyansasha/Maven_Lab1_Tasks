@@ -295,10 +295,13 @@ public class Task implements Cloneable, Serializable {
     @Override
     public String toString() {
         StringBuilder t = new StringBuilder();
-
-        t.append("Task{ ").append("title='").append(title).append("', time=").append(time).append(", start=")
-                .append(start).append(", end=").append(end).append(", interval=").append(interval).append(", active=")
-                .append(active).append(", repeat=").append(repeat).append('}');
+        if (repeat)
+            t.append("Task{ ").append("title='").append(title).append(", start=").append(start)
+                    .append(", end=").append(end).append(", interval=").append(interval).append(", active=")
+                    .append(active).append(", repeat=").append(repeat).append('}');
+        else
+            t.append("Task{ ").append("title='").append(title).append("', time=").append(time)
+                    .append(", active=").append(active).append(", repeat=").append(repeat).append('}');
 
         return t.toString();
     }
