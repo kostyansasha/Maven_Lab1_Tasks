@@ -1,19 +1,27 @@
 package tasks;
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.SortedMap;
 import org.apache.log4j.Logger;
 
+import javax.xml.transform.TransformerException;
+
 public class Model {
     TaskList tasks;
     File file;
+    static String filename = "tasks_File.txt";
     static Logger log = Logger.getLogger(Model.class);
 
     public Model() {
         try {
+            TaskIO io = new TaskIO();
             tasks = new ArrayTaskList();
-            file = new File("tasks_File.txt");
+            System.out.println("last work program "+io.ReadXML().toString());
+            System.out.println("name file for save task "  + filename);
+            file  = new File(filename);
             TaskIO.readText(tasks, file);
+
             log.info("initialization task success");
         } catch (Exception e) {
             System.out.println("initialization task error");
@@ -21,10 +29,29 @@ public class Model {
         }
     }
 
+    /**
+     * method for change name of file for save tasks
+     * @param s new name
+     */
+    public void ChangeFile(String s){
+        file.delete();
+        filename = s;
+        file = new File(filename);
+        SaveTasks();
+    }
+
     public void AllTask() {
         System.out.println(tasks.toString());
     }
     public void Close() {
+        TaskIO io = new TaskIO();
+        try {
+            io.WriteXML(filename);
+        } catch (TransformerException e) {
+            Model.log.error("error XML" + e);
+        } catch (IOException e) {
+            Model.log.error("error XML" + e);
+        }
         System.exit(0);
     }
 

@@ -1,5 +1,18 @@
 package tasks;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -10,7 +23,6 @@ import java.util.Date;
  * @updated 17-дек-2015 22:26:45
  */
 public class TaskIO{
-
 
     public static void write(TaskList tasks, OutputStream out) throws IOException {
         DataOutputStream outStream = new DataOutputStream(out);
@@ -289,5 +301,67 @@ public class TaskIO{
 
     }
 
+    public void ParamLangXML() {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        try {
+            builder = factory.newDocumentBuilder();
+        }
+        catch (ParserConfigurationException e) {
+            Model.log.error("ParamLangXML");
+        }
+    }
 
+    DocumentBuilder builder;
+
+    public void WriteXML(String s) throws TransformerException, IOException{
+        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+        ParamLangXML();
+        Document doc = builder.newDocument();
+        Element RootElement = doc.createElement("Preference");
+        //time last work
+        Element NameElementTitle = doc.createElement("timeLastWork");
+        NameElementTitle.appendChild(doc.createTextNode(date.format(System.currentTimeMillis())));
+        RootElement.appendChild(NameElementTitle);
+        //file name
+        Element ElementTitle = doc.createElement("nameFileSaveTask");
+        ElementTitle.appendChild(doc.createTextNode(s));
+        RootElement.appendChild(ElementTitle);
+        // add in XML
+        doc.appendChild(RootElement);
+        Transformer t=  TransformerFactory.newInstance().newTransformer();
+        t.setOutputProperty(OutputKeys.METHOD, "xml");
+        t.setOutputProperty(OutputKeys.INDENT, "yes");
+        t.transform(new DOMSource(doc), new StreamResult(new FileOutputStream("Preference.xml")));
+        //DOMSource -- представляет полученные данные в виде Document Object Model (DOM).
+        //(представляется в виде древовидной структуры документа)
+        //StreamResult -- "Записывает в память" преобразованный документ... к которому мы можем уже обращаться...
+        //как к xml документу. А файл, мы в него выгружаем полученный результат (в StreamResult) конечного преобразования.
+        //transform - метод который и позволяет преобразовывать "исходник" (текст который мы выдаём за xml)
+        //в xml (древовидную структуру)
+    }
+
+
+
+    public Date ReadXML() throws IOException, SAXException, ParseException {
+        Date date;
+        SimpleDateFormat Sdate = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+        ParamLangXML();
+        Document document = builder.parse(new File("Preference.xml"));
+        document.getDocumentElement().normalize();
+
+        //take time
+        NodeList nList = document.getElementsByTagName("timeLastWork");
+        Node node = nList.item(0);
+        date = Sdate.parse(node.getTextContent());
+
+        //Element eElement = (Element) node;
+        //eElement.getAttributeNode("timeLastWork");
+        nList = document.getElementsByTagName("nameFileSaveTask");
+        node = nList.item(0);
+        Model.filename = node.getTextContent();
+
+        return date;
+    }
 }

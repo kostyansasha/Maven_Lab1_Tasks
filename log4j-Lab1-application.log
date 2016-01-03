@@ -20,3 +20,96 @@
 2015-12-30 12:25:48 INFO  Model:17 - initialization task success
 2015-12-30 12:29:31 INFO  Model:17 - initialization task success
 2015-12-30 12:52:10 INFO  Model:17 - initialization task success
+2016-01-02 18:52:42 INFO  Model:20 - initialization task success
+2016-01-02 18:53:11 INFO  Model:20 - initialization task success
+2016-01-02 19:00:09 INFO  Model:20 - initialization task success
+2016-01-02 19:00:27 INFO  Model:20 - initialization task success
+2016-01-02 19:40:56 INFO  Model:20 - initialization task success
+2016-01-02 19:40:57 DEBUG Model:25 - initialization  task error in class ModelUnparseable date: "com.sun.org.apache.xerces.internal.dom.DeepNodeListImpl@133314b"
+2016-01-02 19:43:07 INFO  Model:20 - initialization task success
+2016-01-02 19:43:07 DEBUG Model:25 - initialization  task error in class ModelUnparseable date: "com.sun.org.apache.xerces.internal.dom.DeepNodeListImpl@b1bc7ed"
+2016-01-02 19:43:33 INFO  Model:20 - initialization task success
+2016-01-02 19:43:33 DEBUG Model:25 - initialization  task error in class ModelUnparseable date: "com.sun.org.apache.xerces.internal.dom.DeepNodeListImpl@b1bc7ed"
+2016-01-02 19:43:47 INFO  Model:20 - initialization task success
+2016-01-02 19:43:47 DEBUG Model:25 - initialization  task error in class Modelnull
+2016-01-02 19:44:02 INFO  Model:20 - initialization task success
+2016-01-02 19:44:02 DEBUG Model:25 - initialization  task error in class Modelnull
+2016-01-02 19:44:09 INFO  Model:20 - initialization task success
+2016-01-02 19:44:09 DEBUG Model:25 - initialization  task error in class Modelnull
+2016-01-02 19:44:45 INFO  Model:20 - initialization task success
+2016-01-02 19:44:45 DEBUG Model:25 - initialization  task error in class ModelUnparseable date: ""
+2016-01-02 19:45:03 INFO  Model:20 - initialization task success
+2016-01-02 19:45:03 DEBUG Model:25 - initialization  task error in class ModelUnparseable date: ""
+2016-01-02 19:45:11 INFO  Model:20 - initialization task success
+2016-01-02 19:45:11 DEBUG Model:25 - initialization  task error in class ModelUnparseable date: ""
+2016-01-02 19:54:06 DEBUG Model:27 - initialization  task error in class ModelUnparseable date: "[timeLastWork: null]"
+2016-01-02 19:55:47 DEBUG Model:27 - initialization  task error in class ModelUnparseable date: "com.sun.org.apache.xerces.internal.dom.DeepNodeListImpl@4fca772d"
+2016-01-02 20:25:05 DEBUG Model:27 - initialization  task error in class ModelUnparseable date: "timeLastWork"
+2016-01-02 20:25:38 DEBUG Model:27 - initialization  task error in class ModelUnparseable date: "true"
+2016-01-02 20:26:45 DEBUG Model:27 - initialization  task error in class ModelUnparseable date: "1"
+2016-01-02 20:30:15 DEBUG Model:27 - initialization  task error in class Modelnull
+2016-01-02 20:31:25 DEBUG Model:27 - initialization  task error in class ModelUnparseable date: "timeLastWork"
+2016-01-02 20:32:00 DEBUG Model:27 - initialization  task error in class Modelnull
+2016-01-02 20:32:21 DEBUG Model:27 - initialization  task error in class ModelUnparseable date: "timeLastWork"
+2016-01-02 20:32:39 INFO  Model:24 - initialization task success
+2016-01-03 09:21:28 DEBUG Model:30 - initialization  task error in class Modelnull
+2016-01-03 09:21:42 INFO  Model:27 - initialization task success
+2016-01-03 09:25:39 INFO  Model:27 - initialization task success
+2016-01-03 09:26:11 DEBUG Model:30 - initialization  task error in class Modelnull
+2016-01-03 09:52:07 INFO  Model:26 - initialization task success
+2016-01-03 09:54:21 INFO  Model:26 - initialization task success
+2016-01-03 10:21:52 INFO  Model:26 - initialization task success
+2016-01-03 10:35:41 INFO  Model:26 - initialization task success
+2016-01-03 10:36:09 INFO  Model:26 - initialization task success
+2016-01-03 10:37:08 INFO  Model:81 - tass add
+2016-01-03 10:43:05 INFO  Model:26 - initialization task success
+2016-01-03 10:45:31 INFO  Model:81 - tass add
+2016-01-03 10:46:15 INFO  Model:68 - Task remove success
+2016-01-03 10:46:15 INFO  Model:81 - tass add
+2016-01-03 10:46:15 INFO  Model:122 - task edit success
+2016-01-03 10:46:34 INFO  Model:68 - Task remove success
+2016-01-03 10:46:34 INFO  Model:81 - tass add
+2016-01-03 10:46:34 INFO  Model:122 - task edit success
+2016-01-03 10:48:44 INFO  Model:26 - initialization task success
+2016-01-03 10:51:14 INFO  Model:26 - initialization task success
+2016-01-03 10:52:07 INFO  Model:26 - initialization task success
+2016-01-03 10:56:13 INFO  Model:25 - initialization task success
+2016-01-03 10:56:36 INFO  Model:25 - initialization task success
+2016-01-03 10:57:02 INFO  Model:25 - initialization task success
+2016-01-03 10:57:45 INFO  Model:80 - tass add
+2016-01-03 10:59:06 INFO  Model:25 - initialization task success
+2016-01-03 11:00:38 INFO  Model:25 - initialization task success
+2016-01-03 11:03:06 INFO  Model:25 - initialization task success
+2016-01-03 11:14:57 INFO  Model:26 - initialization task success
+2016-01-03 11:15:11 INFO  Model:26 - initialization task success
+2016-01-03 11:15:30 INFO  Model:26 - initialization task success
+2016-01-03 11:17:26 INFO  Model:26 - initialization task success
+2016-01-03 11:17:42 INFO  Model:26 - initialization task success
+2016-01-03 11:18:02 INFO  Model:26 - initialization task success
+2016-01-03 11:19:11 INFO  Model:26 - initialization task success
+2016-01-03 11:23:47 INFO  Model:26 - initialization task success
+2016-01-03 11:24:36 INFO  Model:68 - Task remove success
+2016-01-03 11:24:36 INFO  Model:81 - tass add
+2016-01-03 11:24:36 INFO  Model:122 - task edit success
+2016-01-03 11:24:51 INFO  Model:26 - initialization task success
+2016-01-03 11:26:20 INFO  Model:68 - Task remove success
+2016-01-03 11:26:20 INFO  Model:81 - tass add
+2016-01-03 11:26:20 INFO  Model:122 - task edit success
+2016-01-03 11:26:37 INFO  Model:26 - initialization task success
+2016-01-03 11:27:07 INFO  Model:26 - initialization task success
+2016-01-03 11:27:13 INFO  Model:26 - initialization task success
+2016-01-03 11:28:30 INFO  Model:25 - initialization task success
+2016-01-03 11:36:43 INFO  Model:80 - tass add
+2016-01-03 11:36:56 INFO  Model:25 - initialization task success
+2016-01-03 11:38:23 INFO  Model:25 - initialization task success
+2016-01-03 11:38:45 INFO  Model:67 - Task remove success
+2016-01-03 11:38:45 INFO  Model:80 - tass add
+2016-01-03 11:38:45 INFO  Model:122 - task edit success
+2016-01-03 11:45:47 INFO  Model:25 - initialization task success
+2016-01-03 12:11:40 INFO  Model:25 - initialization task success
+2016-01-03 12:14:50 INFO  Model:25 - initialization task success
+2016-01-03 12:16:39 INFO  Model:67 - Task remove success
+2016-01-03 12:16:39 INFO  Model:80 - tass add
+2016-01-03 12:16:39 INFO  Model:124 - task edit success
+2016-01-03 12:18:53 INFO  Model:25 - initialization task success
+2016-01-03 12:27:05 INFO  Model:25 - initialization task success

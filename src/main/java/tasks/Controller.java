@@ -2,23 +2,47 @@ package tasks;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.SortedMap;
+import java.util.*;
 
 
-public class Controller {
-    private Model model;
+public class Controller implements Runnable{
+    Model model;
     View view;
+    Scanner br;
 
     public Controller(Model m) {
         this.model = m;
+        br = new Scanner(System.in);
     }
 
     public void Close() {
         model.Close();
     }
 
-    public SortedMap Period(int i) {
-        return (model.Period(i));
+    /**
+     * method for change name of file for save tasks
+     * 
+     */
+    public void NameSaveFile(){
+        String s = null;
+        while (s == null || s.equals("")) {
+            s = br.nextLine();
+        }
+        model.ChangeFile(s);
+    }
+
+    /**
+     *
+     * @return a string where each line have the time and  task,
+     * if on that time have several tasks, they are written in one line.
+     */
+    public String Period() {
+        int per = br.nextInt();
+        String s = "";
+        for (Object t: model.Period(per).entrySet()) {
+            s = s + t.toString() + "\n";
+        }
+        return s;
     }
 
     public void AllTask() {
@@ -105,6 +129,35 @@ public class Controller {
             Model.log.info("task edit success");
         } catch (Exception e) {
             Model.log.error("task edit err" + e);
+        }
+    }
+
+    /**
+     * notification of the occurrence of the task
+     */
+    @Override
+    public void run() {
+        Date current;
+
+
+        while (true) {
+            current = new Date(System.currentTimeMillis() + 3600 * 1000);
+
+            for (Task task : model.tasks) {
+                Date next = task.nextTimeAfter(current);
+                if (next != null) {
+                    Date occ = new Date(current.getTime() + 60 * 1000);
+                    if (occ.compareTo(next) >= 0) {
+                        System.out.println("you have task after one hour " + task.toString());
+                    }
+                }
+            }
+
+            try {
+                Thread.sleep(60000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

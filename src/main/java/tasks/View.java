@@ -22,17 +22,20 @@ public class View {
 
         while(true) {
             System.out.println("please choose the next variant:");
-            System.out.println("quit- 9, future task in period- 1, view all task- 2");
+            System.out.println("quit- 9, future task in period- 1, view all task- 2, change name file for save task- 5");
 
             int choose = br.nextInt();
             switch (choose) {
                 case 9:
                     controller.Close();
                     break;
+                case 5:
+                    System.out.println("write new name");
+                    controller.NameSaveFile();
+                    break;
                 case 1:
                     System.out.println("write period:");
-                    int per = br.nextInt();
-                    System.out.println(controller.Period(per).toString());
+                    System.out.println(controller.Period());
                     break;
                 case 2:
                     controller.AllTask();
@@ -132,21 +135,26 @@ public class View {
         }
 
         System.out.println("if task active write y, else n");
-        String active = "";
-        while (!active.equals("y") && !active.equals("n") ) {
-            active = scan.nextLine();
+        String act = "";
+        boolean active = false;
+        while (!act.equals("y") && !act.equals("n") ) {
+            act = scan.nextLine();
+        }
+        if (act.equals("y")) {
+            active = true;
         }
 
         //add task
         if (repeat.equals("y")) { // for repeat
             try {
-                controller.AddTask(name, start, end, interval, repeat, true); // send parameters task in controller
+
+                controller.AddTask(name, start, end, interval, repeat, active); // send parameters task in controller
             } catch (ParseException e) {
                 System.out.println("not correct");
             }
         } else {
             try {               // for not repeat
-                controller.AddTask(name, start, end, interval, repeat, false);
+                controller.AddTask(name, start, end, interval, repeat, active);
             } catch (ParseException e) {
                 System.out.println("not correct");
             }
@@ -232,6 +240,7 @@ public class View {
 
             if (this.Confirm()){
                 controller.Edit(task, i);
+                break;
             } else {
                 task = null;
             }
