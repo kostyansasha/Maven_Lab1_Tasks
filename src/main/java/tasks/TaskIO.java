@@ -301,8 +301,13 @@ public class TaskIO{
 
     }
 
-    public void ParamLangXML() {
+    /**
+     * method creates factory for work with XML
+     */
+    static DocumentBuilder builder;
+    public static void ParamLangXML() {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+
         try {
             builder = factory.newDocumentBuilder();
         }
@@ -311,9 +316,14 @@ public class TaskIO{
         }
     }
 
-    DocumentBuilder builder;
-
-    public void WriteXML(String s) throws TransformerException, IOException{
+    /**
+     * write in XML current time and file name with tasks
+     *
+     * @param s is name of file
+     * @throws TransformerException
+     * @throws IOException
+     */
+    public static void WriteXML(String s) throws TransformerException, IOException{
         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
         ParamLangXML();
@@ -341,9 +351,15 @@ public class TaskIO{
         //в xml (древовидную структуру)
     }
 
-
-
-    public Date ReadXML() throws IOException, SAXException, ParseException {
+    /**
+     * for read XML
+     *
+     * @return time is work program in the previous time
+     * @throws IOException
+     * @throws SAXException
+     * @throws ParseException
+     */
+    public static Date ReadXML() throws IOException, SAXException, ParseException {
         Date date;
         SimpleDateFormat Sdate = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 

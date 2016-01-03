@@ -1,16 +1,11 @@
 package tasks;
 
-import java.util.Date;
-
 public class Main {
     public static void main(String[] args) {
-        Model m = new Model();
-        Controller c = new Controller(m);
-        View v = new View(c);
-
+        Controller c = new Controller();
         Thread t = new Thread(c);
-        t.start();
 
-        v.Start();
+        t.start(); //Thread for reminders
+        c.Start(); //work with console
     }
 }

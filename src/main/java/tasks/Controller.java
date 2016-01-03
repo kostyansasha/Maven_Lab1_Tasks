@@ -6,13 +6,67 @@ import java.util.*;
 
 
 public class Controller implements Runnable{
-    Model model;
-    View view;
-    Scanner br;
+    private Model model;
+    private View view;
+    private Scanner br;
 
-    public Controller(Model m) {
-        this.model = m;
+    public Controller() {
+        this.model = new Model();
+        this.view = new View(this);
         br = new Scanner(System.in);
+    }
+
+    /**
+     * the main level of work with the console
+     */
+    public void Start() {
+        while(true) {
+            switch (view.Level1()) {
+                case 9:
+                    Close();
+                    break;
+                case 5:
+                    NameSaveFile();
+                    break;
+                case 1:
+                    view.Print(Period());
+                    break;
+                case 2:
+                    AllTask();
+                    String str = "";
+                    while (!str.equals("0")) {
+                        str = view.Level2();
+
+                        if (str.equals("2d")) { //delete
+                            view.Print("write number task: ");
+                            int number = br.nextInt();
+                            if (view.Confirm()) {
+                                Remove(number);
+                            } else {
+                                view.Print("task not delete");
+                            }
+                        }
+
+                        if (str.equals("2e")) {//edit
+                            view.Print("write number task that you want edit: ");
+                            int number = br.nextInt();
+                            view.Print(View(number).toString());
+                            view.Edit(number);
+                        }
+
+                        if (str.equals("2a")) {//add
+                            view.AddTask();
+                        }
+
+                        if (str.equals("2v")) {//view
+                            view.Print("write number task: ");
+                            int number = br.nextInt();
+                            view.Print(View(number).toString());
+                        }
+                    }
+                    break;
+            }
+        }
     }
 
     public void Close() {
@@ -21,13 +75,15 @@ public class Controller implements Runnable{
 
     /**
      * method for change name of file for save tasks
-     * 
+     *
      */
-    public void NameSaveFile(){
+    public void NameSaveFile() {
+        view.Print("write new name");
         String s = null;
         while (s == null || s.equals("")) {
             s = br.nextLine();
         }
+
         model.ChangeFile(s);
     }
 
@@ -37,9 +93,11 @@ public class Controller implements Runnable{
      * if on that time have several tasks, they are written in one line.
      */
     public String Period() {
-        int per = br.nextInt();
+        view.Print("write period (days): ");
+        int per ;
+        per = br.nextInt();
         String s = "";
-        for (Object t: model.Period(per).entrySet()) {
+        for (Object t : model.Period(per).entrySet()) {
             s = s + t.toString() + "\n";
         }
         return s;
@@ -143,7 +201,7 @@ public class Controller implements Runnable{
         while (true) {
             current = new Date(System.currentTimeMillis() + 3600 * 1000);
 
-            for (Task task : model.tasks) {
+            for (Task task : model.getTasks()) {
                 Date next = task.nextTimeAfter(current);
                 if (next != null) {
                     Date occ = new Date(current.getTime() + 60 * 1000);

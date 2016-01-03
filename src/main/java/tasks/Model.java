@@ -8,23 +8,21 @@ import org.apache.log4j.Logger;
 import javax.xml.transform.TransformerException;
 
 public class Model {
-    TaskList tasks;
-    File file;
+    private TaskList tasks;
+    private File file;
     static String filename = "tasks_File.txt";
     static Logger log = Logger.getLogger(Model.class);
 
     public Model() {
         try {
-            TaskIO io = new TaskIO();
             tasks = new ArrayTaskList();
-            System.out.println("last work program "+io.ReadXML().toString());
-            System.out.println("name file for save task "  + filename);
+            System.out.println("last work program is "+ TaskIO.ReadXML().toString());
+            System.out.println("name file for save task is  "  + filename);
             file  = new File(filename);
             TaskIO.readText(tasks, file);
 
             log.info("initialization task success");
         } catch (Exception e) {
-            System.out.println("initialization task error");
             log.debug("initialization  task error in class Model" + e.getMessage());
         }
     }
@@ -34,22 +32,25 @@ public class Model {
      * @param s new name
      */
     public void ChangeFile(String s){
-        file.delete();
+        file.delete();//true or false no matter
         filename = s;
         file = new File(filename);
         SaveTasks();
+        try {
+            TaskIO.WriteXML(filename);
+        } catch (TransformerException | IOException e) {
+            log.error("write in xml" + e);
+        }
     }
 
     public void AllTask() {
         System.out.println(tasks.toString());
     }
+
     public void Close() {
-        TaskIO io = new TaskIO();
         try {
-            io.WriteXML(filename);
-        } catch (TransformerException e) {
-            Model.log.error("error XML" + e);
-        } catch (IOException e) {
+            TaskIO.WriteXML(filename);
+        } catch (TransformerException | IOException e) {
             Model.log.error("error XML" + e);
         }
         System.exit(0);
@@ -59,8 +60,9 @@ public class Model {
         Date d = new Date(System.currentTimeMillis());
         Date d2 = new Date( d.getTime() + (i*1000 * 86400) );
 
-        return ( Tasks.calendar(tasks, d, d2 ));
+        return ( Tasks.calendar(tasks, d, d2));
     }
+
     public void Remove(int i) {
         try {
             tasks.remove(tasks.getTask(i));
@@ -70,6 +72,7 @@ public class Model {
             log.error("task remove Error");
         }
     }
+
     public Task View(int a) {
         return tasks.getTask(a);
     }
@@ -80,7 +83,7 @@ public class Model {
             log.info("tass add");
             SaveTasks();
         } catch (Exception e) {
-            log.error("task add"+e);
+            log.error("task add" + e);
         }
     }
 
@@ -90,5 +93,13 @@ public class Model {
         } catch (Exception e ){
             log.error("write in file Error"+e);
         }
+    }
+
+    /**
+     * get task for controller if it needs
+     * @return task list
+     */
+    public TaskList getTasks () {
+        return tasks;
     }
 }
