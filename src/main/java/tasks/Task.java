@@ -1,15 +1,15 @@
+//package ua.sumdu.j2se.kostyan.tasks;
+package tasks;
+
+import java.io.Serializable;
+import java.util.Date;
+
 /**
  * Class that describes the Task
  *
  * @author Sasha Kostyan
  * @version %I%, %G%
  */
-
-//package ua.sumdu.j2se.kostyan.tasks;
-package tasks;
-import java.io.Serializable;
-import java.util.Date;
-
 public class Task implements Cloneable, Serializable {
     private String title;
     private Date time = new Date(0);
@@ -33,7 +33,6 @@ public class Task implements Cloneable, Serializable {
      * @throws Exception which show that the task has not been created
      */
     public Task(String title, Date time) throws Exception{
-
         if (title == null) {
             throw new Exception ("Title can not be null");
         }
@@ -60,20 +59,19 @@ public class Task implements Cloneable, Serializable {
      * @throws Exception which show that the task has not been created
      */
     public Task(String title, Date start, Date end, int interval) throws Exception {
-
         if (title == null) {
             throw new Exception ("Title can not be null");
         }
 
-        if ( interval == 0) {
+        if (interval == 0) {
             throw new Exception ("interval can not be 0");
         }
 
-        if ( start.after(end) /*time > end*/ ) {
+        if (start.after(end)) {
             throw new Exception ("start can not be > endTime");
         }
 
-        if ( interval >= end.getTime() - start.getTime()) {
+        if (interval >= end.getTime() - start.getTime()) {
             throw new Exception ("interval can not be >= EndTime - Time");
         }
 
@@ -94,13 +92,11 @@ public class Task implements Cloneable, Serializable {
      * @param title is name of task
      */
     public void setTitle(String title) {
-
         this.title = title;
     }
 
     /**
      * method of task status
-     *
      * @param active <code>true</code> if the task active
      *               <code>false</code> if the task does not active
      */
@@ -109,11 +105,9 @@ public class Task implements Cloneable, Serializable {
     }
 
     /**
-     *
      * @return status of task
      */
     public boolean isActive() {
-
         return active;
     }
 
@@ -121,13 +115,12 @@ public class Task implements Cloneable, Serializable {
     // методы для счит и изм времени состояния что не повторяются
     /**
      * Reading time status of tasks that are not repeated
-     *
      * @return if task is repeated back task start time
      *          else return time
      */
     public Date getTime() {
         if (repeat) {
-            return new Date(start.getTime());   //???
+            return new Date(start.getTime());
         }
 
         return new Date(time.getTime());
@@ -136,7 +129,6 @@ public class Task implements Cloneable, Serializable {
     /**
      * Set time of tasks that are not repeated
      * if the problem is repeated, it has become such, not repeated.
-     *
      * @param time is time for set
      */
     public void setTime(Date time) {
@@ -156,15 +148,14 @@ public class Task implements Cloneable, Serializable {
      */
     public Date getStartTime() {
         if (repeat) {
-            return new Date(start.getTime());   //???
+            return new Date(start.getTime());
         }
 
-        return new Date(time.getTime()); //- end; ???? час виконаня задачи
+        return new Date(time.getTime());
     }
 
     /**
      * Reading end time of tasks that are repeated
-     *
      * @return end time
      */
     public Date getEndTime() {
@@ -249,7 +240,6 @@ public class Task implements Cloneable, Serializable {
         return null;
     }
 
-///////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * special metods for check that task are equals
@@ -258,20 +248,19 @@ public class Task implements Cloneable, Serializable {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) { return true; }
+        if (o == null || getClass() != o.getClass()) { return false; }
 
         Task task = (Task) o;
 
-        if ( !time.equals(task.time) )   return false;
+        if ( !time.equals(task.time) )   { return false; }
         //if ( !start.equals(task.start)) return false;
         //if (end != task.end)     return false;
         //if (interval != task.interval) return false;
-        if (active != task.active) return false;
-        if (repeat != task.repeat) return false;
+        if (active != task.active) { return false; }
+        if (repeat != task.repeat) { return false; }
 
-        if (!title.equals(task.title)) return false;
-
+        if (!title.equals(task.title)) { return false; }
         return true;
     }
 
@@ -280,12 +269,10 @@ public class Task implements Cloneable, Serializable {
         int result;
 
         result = title != null ? title.hashCode() : 0;
-
-         result = result + (int)time.getTime();
-  //     result = 31 * result + start;
-    //   result = 31 * result + end;
-      // result = 31 * result + interval;
-
+        result = result + (int)time.getTime();
+        //result = 31 * result + start;
+        //result = 31 * result + end;
+        //result = 31 * result + interval;
         result = 31 * result + (active ? 1 : 0);
         result = 31 * result + (repeat ? 1 : 0);
 
@@ -295,14 +282,15 @@ public class Task implements Cloneable, Serializable {
     @Override
     public String toString() {
         StringBuilder t = new StringBuilder();
-        if (repeat)
+
+        if (repeat) {
             t.append("Task{ ").append("title='").append(title).append(", start=").append(start)
                     .append(", end=").append(end).append(", interval=").append(interval).append(", active=")
                     .append(active).append(", repeat=").append(repeat).append('}');
-        else
+        } else {
             t.append("Task{ ").append("title='").append(title).append("', time=").append(time)
                     .append(", active=").append(active).append(", repeat=").append(repeat).append('}');
-
+        }
         return t.toString();
     }
 
@@ -318,19 +306,20 @@ public class Task implements Cloneable, Serializable {
             System.out.println("Task in clone not create");
         }
 
-        try {
-            result.setTitle(this.getTitle());
+        if (result != null) {
+            try {
+                result.setTitle(this.getTitle());
 
-            result.time = new Date(this.getTime().getTime());
-            result.setTime(new Date(this.getStartTime().getTime()), new Date(this.getEndTime().getTime()), this.getRepeatInterval());
+                result.time = new Date(this.getTime().getTime());
+                result.setTime(new Date(this.getStartTime().getTime()), new Date(this.getEndTime().getTime()), this.getRepeatInterval());
 
-            result.setActive(this.isActive());
-            result.repeat = this.isRepeated();
-        } catch (Exception e) {
-            System.out.println("Task parametrs not set");
-            //e.printStackTrace();
+                result.setActive(this.isActive());
+                result.repeat = this.isRepeated();
+            } catch (Exception e) {
+                System.out.println("Task parametrs not set");
+                //e.printStackTrace();
+            }
         }
-
         return result;
     }
 }

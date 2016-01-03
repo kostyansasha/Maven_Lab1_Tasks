@@ -1,97 +1,92 @@
 package tasks;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 /**
+ * Class that produce pattern MVC
  *
+ * @author Sasha Kostyan
+ * @version %I%, %G%
  */
 public class View {
-    private Controller controller;
     static final String dateFormat = "yyyy-MM-dd HH:mm";
+    private Controller  controller;
+    private Scanner     scan;
 
     public View(Controller c){
         this.controller = c;
-        controller.view = this;
+        this.scan = new Scanner(System.in);
+        System.out.println("Program start");
     }
 
-    public void Start()  {
-        System.out.println("Program start");
-        Scanner br = new Scanner(System.in);
-
-        while(true) {
+    /**
+     * the start view in console
+     * @return number that write in console
+     */
+    public int level1()  {
             System.out.println("please choose the next variant:");
             System.out.println("quit- 9, future task in period- 1, view all task- 2, change name file for save task- 5");
+            int choose;
+            choose = scan.nextInt();
 
-            int choose = br.nextInt();
             switch (choose) {
                 case 9:
-                    controller.Close();
-                    break;
+                    return 9;
                 case 5:
-                    System.out.println("write new name");
-                    controller.NameSaveFile();
-                    break;
+                    return 5;
                 case 1:
-                    System.out.println("write period:");
-                    System.out.println(controller.Period());
-                    break;
+                    return 1;
                 case 2:
-                    controller.AllTask();
-                    String str1 = "";
-
-                    while (!str1.equals("0")) {
-                        System.out.println("remove task ID- 2d, Edit Task ID- 2e, Add Task- 2a, view ID- 2v, return- 0");
-                        str1 = null;
-                        while (str1 == null || str1.equals(""))
-                            str1 = br.nextLine();
-
-                        if (str1.equals("2d")) { //delete
-                            System.out.println("write number task: ");
-                            int number = br.nextInt();
-                            if (Confirm()) {
-                                controller.Remove(number);
-                            } else {
-                                System.out.println("task not delete");
-                            }
-                        }
-
-                        if (str1.equals("2e")) {//edit
-                            System.out.println("write number task that you want edit: ");
-                            int number = br.nextInt();
-                            controller.View(number);
-                            Edit(number);
-                        }
-
-                        if (str1.equals("2a")) {//add
-                            AddTask();
-                        }
-
-                        if (str1.equals("2v")) {//view
-                            System.out.println("write number task: ");
-                            int number = br.nextInt();
-                            System.out.println(controller.View(number).toString());
-                        }
-                    }
+                    return 2;
+                default:
                     break;
             }
-        }
+        return 0;
     }
-    boolean Confirm(){
+
+    /**
+     * For reflect the action when user choose "view all task" in Level1
+     * @return string of choose user
+     */
+    public String level2() {
+        System.out.println("remove task ID- 2d, Edit Task ID- 2e, Add Task- 2a, view ID- 2v, return- 0");
+        String str1 = null;
+
+        while (str1 == null || str1.equals("")) {
+            str1 = scan.nextLine();
+        }
+        return str1;
+    }
+
+    /**
+     * Print String in console
+     * @param s is string with text
+     */
+    public void print(String s) {
+        System.out.println(s);
+    }
+
+    /**
+     * Confirmation of action for Users
+     * @return true or false
+     */
+    boolean confirm(){
         System.out.println("are you want confirm?");
-        Scanner br = new Scanner(System.in);
         String conf="";
 
         while (true) {
             System.out.println("write Y or n ");
             while (conf.equals("")) {
-                conf = br.nextLine();
+                conf = scan.nextLine();
             }
 
             if (conf.equals("Y")) {
                 return true;
             }
+
             if (conf.equals("n")) {
                 return false;
             }
@@ -101,12 +96,11 @@ public class View {
     /**
      * form of add task
      */
-    public void AddTask() {
-        Scanner scan = new Scanner(System.in);
-        String start = null; // parameters for future task
-        String end = null;
-        String repeat = "";
-        int interval = 0;
+    public void addTask() {
+        String  start = null; // parameters for future task
+        String  end = null;   //
+        String  repeat = "";  //
+        int     interval = 0; //
 
         System.out.println("write new name");
         String name = scan.nextLine();
@@ -125,6 +119,7 @@ public class View {
         if (repeat.equals("y")) {
             System.out.println("write endDate");
             System.out.println("number format: " + dateFormat);
+
             while (end == null || end.equals("")) {
                 end = scan.nextLine();
             }
@@ -135,57 +130,64 @@ public class View {
         }
 
         System.out.println("if task active write y, else n");
-        String act = "";
+        String  act = "";
         boolean active = false;
+
         while (!act.equals("y") && !act.equals("n") ) {
             act = scan.nextLine();
         }
+
         if (act.equals("y")) {
             active = true;
         }
 
         //add task
-        if (repeat.equals("y")) { // for repeat
+        if (repeat.equals("y")) {                       // for repeat
             try {
-
-                controller.AddTask(name, start, end, interval, repeat, active); // send parameters task in controller
+                controller.addTask(name, start, end, interval, repeat, active); // send parameters task in controller
             } catch (ParseException e) {
                 System.out.println("not correct");
             }
         } else {
-            try {               // for not repeat
-                controller.AddTask(name, start, end, interval, repeat, active);
+            try {                                       // for not repeat
+                controller.addTask(name, start, end, interval, repeat, active);
             } catch (ParseException e) {
                 System.out.println("not correct");
             }
         }
     }
 
-    public void Edit(int i){
-        Task task = controller.View(i).clone();
-        Scanner s = new Scanner(System.in);
-        DateFormat dateForm = new SimpleDateFormat(dateFormat);
-        String choose;
-        String str = null;
+    /**
+     * form of edit task
+     * @param i is number of task for edit
+     */
+    public void edit(int i){
+        Task        task = controller.view(i).clone();
+        DateFormat  dateForm = new SimpleDateFormat(dateFormat);
+        String      choose;
+        String      str = null;
+
+        if (task == null) {
+            return;
+        }
 
         while (true) {
             if (task.isRepeated()) {
                 System.out.println("name- 2en, date- 2ed, endDate- 2ee, interval- 2ei, active/unact- 2ea, view-v, confirm- cof ");
-            }
-            else {
+            } else {
                 System.out.println("name- 2en, date- 2ed, active/unact- 2ea, view-v, confirm- cof ");
             }
 
-            choose = s.nextLine();
+            choose = scan.nextLine();
             if (choose.equals("2en")) {//name
                 System.out.println("write new name");
-                task.setTitle(s.nextLine());
+                task.setTitle(scan.nextLine());
             }
 
-            if (choose.equals("2ed")){
+            if (choose.equals("2ed")) {
                 System.out.println("number format: " + dateFormat);
                 while (str == null || str.equals("")) {
-                    str = s.nextLine();
+                    str = scan.nextLine();
                 }
 
                 try {
@@ -199,9 +201,10 @@ public class View {
                 if (choose.equals("2ee")) {
                     System.out.println(" vvod endDate");
                     System.out.println("number format: " + dateFormat);
+
                     String end = null;
                     while (end == null || end.equals("")) {
-                        end = s.nextLine( );
+                        end = scan.nextLine( );
                     }
 
                     try {
@@ -210,24 +213,29 @@ public class View {
                         System.out.println("not correct format date");
                     }
                 }
+
                 if (choose.equals("2ei")) {
                     System.out.println(" write interval");
+
                     int interval = 0;
                     while (interval <= 0) {
-                        interval = s.nextInt();
+                        interval = scan.nextInt();
                     }
+
                     task.setTime(task.getTime(), task.getEndTime(), interval);
                 }
             }
 
             if (choose.equals("2ea")) {
                 System.out.println("if task active write Y, else N");
+
                 while(true) {
-                    String act = s.nextLine();
+                    String act = scan.nextLine();
                     if (act.equals("Y")) {
                         task.setActive(true);
                         break;
                     }
+
                     if (act.equals("N")) {
                         task.setActive(false);
                         break;
@@ -238,11 +246,13 @@ public class View {
                 System.out.println(task.toString());
             }
 
-            if (this.Confirm()){
-                controller.Edit(task, i);
-                break;
-            } else {
-                task = null;
+            if (choose.equals("cof")) {
+                if (this.confirm()) {
+                    controller.edit(task, i);
+                    break;
+                } else {
+                    task = null;
+                }
             }
         }
 

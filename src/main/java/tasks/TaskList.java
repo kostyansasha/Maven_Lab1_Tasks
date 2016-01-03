@@ -3,13 +3,11 @@ package tasks;
 import java.util.Iterator;
 
 /**
- *
+ * abstract class for release list of task
  *
  * @author Sasha Kostyan
  * @version %I%, %G%
  */
-
-
 public abstract class TaskList implements Iterable<Task> {
     public abstract void add(Task task);
 
@@ -26,8 +24,9 @@ public abstract class TaskList implements Iterable<Task> {
      * @param index the estimated number in list
      */
     public void rangeCheck(int index) {
-        if (index < 0 || index >= size())
-            throw new IndexOutOfBoundsException("Index: "+index);
+        if (index < 0 || index >= size()) {
+            throw new IndexOutOfBoundsException("Index: " + index);
+        }
     }
 
     /**
@@ -37,15 +36,18 @@ public abstract class TaskList implements Iterable<Task> {
      * @return true if list equals or false if not equals
      */
     @Override
-    public boolean  equals(Object o) {
-        if (o == this)
+    public boolean equals(Object o) {
+        if (o == this) {
             return true;
+        }
 
-        if (o == null || !(o instanceof TaskList))
+        if (o == null || !(o instanceof TaskList)) {
             return false;
+        }
 
-        if ( ((TaskList) o).size() != this.size() )
+        if ( ((TaskList) o).size() != this.size() ) {
             return false;
+        }
 
         Iterator<Task> itCurrent = iterator();
         Iterator<Task> itObj = ((TaskList) o).iterator();
@@ -54,15 +56,17 @@ public abstract class TaskList implements Iterable<Task> {
             Task tItCur = itCurrent.next();
             Task tItObj = itObj.next();
 
-            if ( !(tItCur == null ? tItObj == null : tItCur.equals(tItObj) ))
+            if ( !(tItCur == null ? tItObj == null : tItCur.equals(tItObj) )) {
                 return false;
+            }
         }
-        return true; //!(e1.hasNext() || e2.hasNext())
+        return true;
     }
 
     @Override
     public int hashCode() {
         int result = size();
+
         result = 31 * result + getTask(0).hashCode()+getTask(result-1).hashCode();
         return result;
     }
@@ -79,6 +83,7 @@ public abstract class TaskList implements Iterable<Task> {
             b.append("   task[").append(i).append("]: ").append( taskIt.toString()).append('\n');
             i++;
         }
+
         b.append("}");
         return b.toString();
     }

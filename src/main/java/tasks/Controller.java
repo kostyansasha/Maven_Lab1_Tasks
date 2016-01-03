@@ -1,60 +1,148 @@
 package tasks;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-
+/**
+ * Class that produce pattern MVC
+ *
+ * @author Sasha Kostyan
+ * @version %I%, %G%
+ */
 public class Controller implements Runnable{
-    Model model;
-    View view;
-    Scanner br;
+    private Model   model;
+    private View    view;
+    private Scanner br;
 
-    public Controller(Model m) {
-        this.model = m;
+    public Controller() {
+        this.model = new Model();
+        this.view = new View(this);
         br = new Scanner(System.in);
     }
 
-    public void Close() {
-        model.Close();
+    /**
+     * the main level of work with the console
+     */
+    public void start() {
+        while(true) {
+            switch (view.level1()) {
+                case 9:
+                    close();
+                    break;
+                case 5:
+                    nameSaveFile();
+                    break;
+                case 1:
+                    view.print(period());
+                    break;
+                case 2:
+                    allTask();
+                    String str = "";
+
+                    while (!str.equals("0")) {
+                        str = view.level2();
+
+                        if (str.equals("2d")) {                     //delete
+                            view.print("write number task: ");
+                            int number = br.nextInt();
+
+                            if (view.confirm()) {
+                                remove(number);
+                            } else {
+                                view.print("task not delete");
+                            }
+                        }
+
+                        if (str.equals("2e")) {                     //edit
+                            view.print("write number task that you want edit: ");
+                            int number = br.nextInt();
+
+                            view.print(view(number).toString());
+                            view.edit(number);
+                        }
+
+                        if (str.equals("2a")) {                     //add
+                            view.addTask();
+                        }
+
+                        if (str.equals("2v")) {                     //view
+                            view.print("write number task: ");
+                            int number = br.nextInt();
+
+                            view.print(view(number).toString());
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    /**
+     * method for close the program
+     */
+    public void close() {
+        model.close();
     }
 
     /**
      * method for change name of file for save tasks
-     * 
+     *
      */
-    public void NameSaveFile(){
+    public void nameSaveFile() {
+        view.print("write new name");
         String s = null;
+
         while (s == null || s.equals("")) {
             s = br.nextLine();
         }
-        model.ChangeFile(s);
+
+        model.changeFile(s);
     }
 
     /**
-     *
      * @return a string where each line have the time and  task,
      * if on that time have several tasks, they are written in one line.
      */
-    public String Period() {
-        int per = br.nextInt();
-        String s = "";
-        for (Object t: model.Period(per).entrySet()) {
+    public String period() {
+        view.print("write period (days): ");
+        int     per;
+        String  s = "";
+
+        per = br.nextInt();
+
+        for (Object t : model.period(per).entrySet()) {
             s = s + t.toString() + "\n";
         }
+
         return s;
     }
 
-    public void AllTask() {
-        model.AllTask();
+    /**
+     * method for view all tasks of list
+     */
+    public void allTask() {
+        view.print(model.getTasks().toString());
     }
 
-    public void Remove(int i){
-        model.Remove(i);
+    /**
+     * remove specific task in list
+     * @param i number in list
+     */
+    public void remove(int i){
+        model.remove(i);
     }
 
-    public Task View(int a) {
-        return (model.View(a));
+    /**
+     * view specific task in list more detail
+     * @param a number in list
+     * @return Task
+     */
+    public Task view(int a) {
+        return model.view(a);
     }
 
     /**
@@ -68,17 +156,13 @@ public class Controller implements Runnable{
      * @param active is active or not
      * @throws ParseException
      */
-    public void AddTask(String name, String start, String end, int interval, String rep, boolean active)
+    public void addTask(String name, String start, String end, int interval, String rep, boolean active)
             throws ParseException {
-        DateFormat dateForm = new SimpleDateFormat(View.dateFormat);
-        Task task = null;
-        boolean repeat;
+        DateFormat  dateForm = new SimpleDateFormat(View.dateFormat);
+        Task        task = null;
+        boolean     repeat;
 
-        if (rep.equals("y")) {
-            repeat = true;
-        } else{
-            repeat = false;
-        }
+        repeat = rep.equals("y");
 
         // create task
         if (repeat) {
@@ -105,14 +189,15 @@ public class Controller implements Runnable{
         if (task == null) {
             return;
         }
+
         System.out.println("are you want save this task:");
         System.out.println(task.toString());
-        if (this.view.Confirm()) {
-            model.AddTask(task);
+
+        if (this.view.confirm()) {
+            model.addTask(task);
             System.out.println("task add");
         } else {
             System.out.println("task not add");
-            task = null;
         }
     }
 
@@ -122,10 +207,10 @@ public class Controller implements Runnable{
      * @param task is new
      * @param i is old
      */
-    public void Edit(Task task, int i) {
+    public void edit(Task task, int i) {
         try {
-            model.Remove(i);
-            model.AddTask(task);
+            model.remove(i);
+            model.addTask(task);
             Model.log.info("task edit success");
         } catch (Exception e) {
             Model.log.error("task edit err" + e);
@@ -139,12 +224,12 @@ public class Controller implements Runnable{
     public void run() {
         Date current;
 
-
         while (true) {
             current = new Date(System.currentTimeMillis() + 3600 * 1000);
 
-            for (Task task : model.tasks) {
+            for (Task task : model.getTasks()) {
                 Date next = task.nextTimeAfter(current);
+
                 if (next != null) {
                     Date occ = new Date(current.getTime() + 60 * 1000);
                     if (occ.compareTo(next) >= 0) {

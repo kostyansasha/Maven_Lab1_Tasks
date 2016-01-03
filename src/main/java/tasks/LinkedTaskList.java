@@ -1,22 +1,19 @@
 package tasks;
+
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
 
 /**
  * linked list
  * @author Sasha Kostyan
  * @version %I%, %G%
- * @updated 17-дек-2015 22:26:45
  */
-
 public class LinkedTaskList extends TaskList implements Cloneable, Serializable {
-    // variable for size of array
-    private int numberOfSizeArrayTask;
-    //
+    private int numberOfSizeArrayTask;          // variable for size of array
     private TaskNode point;
     private TaskNode first;
+
     /**
      * method that add to the list of task
      *
@@ -37,7 +34,6 @@ public class LinkedTaskList extends TaskList implements Cloneable, Serializable 
         }
     }
 
-
     /**
      * method that delete task from list
      *
@@ -47,8 +43,9 @@ public class LinkedTaskList extends TaskList implements Cloneable, Serializable 
      * @throws Exception
      */
     public boolean remove(Task task) throws Exception {
-        if (task == null)
+        if (task == null) {
             throw new Exception("incoming task is null");
+        }
 
         TaskNode pointPredecessor;
         TaskNode point = this.first;
@@ -81,6 +78,7 @@ public class LinkedTaskList extends TaskList implements Cloneable, Serializable 
                 this.numberOfSizeArrayTask--;
                 return true;
             }
+
             pointPredecessor = point;
             point = point.getNext();
         }
@@ -113,15 +111,16 @@ public class LinkedTaskList extends TaskList implements Cloneable, Serializable 
     public Task getTask(int index) {
         rangeCheck(index);
 
-        int count = 0;
-        TaskNode point = first;
+        int         count = 0;
+        TaskNode    point = first;
 
         if (point == null)
             return null;
 
         while (index >= count) {
-            if (count == index)
+            if (count == index) {
                 break;
+            }
 
             point = point.getNext();
             count += 1;
@@ -130,33 +129,28 @@ public class LinkedTaskList extends TaskList implements Cloneable, Serializable 
     }
 
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////
     //@Override
     public Iterator<Task> iterator() {
-
         return new MyIterator();
     }
 
     private class MyIterator implements Iterator<Task> {
-        private TaskNode lastReturned;
-        private TaskNode next;
-        private int nextIndex;
+        private TaskNode    lastReturned;
+        private TaskNode    next;
+        private int         nextIndex;
 
         public MyIterator() {
             next = first;
-
         }
 
         public boolean hasNext() {
-            //return nextIndex < numberOfSizeArrayTask; //LinkedTaskList.this.numberOfSizeArrayTask
-            if (next == null) return false;
-            // if (next.getNext() == null) return false;
-            return true;
+            return next != null;
         }
 
         public Task next() {
-            if (!hasNext())
+            if (!hasNext()) {
                 throw new NoSuchElementException();
+            }
 
             lastReturned = next;
             next = next.getNext();
@@ -165,8 +159,9 @@ public class LinkedTaskList extends TaskList implements Cloneable, Serializable 
         }
 
         public void remove() {
-            if (lastReturned == null)
+            if (lastReturned == null) {
                 throw new IllegalStateException();
+            }
 
             try {
                 LinkedTaskList.this.remove(getTask(nextIndex-1));
@@ -186,9 +181,9 @@ public class LinkedTaskList extends TaskList implements Cloneable, Serializable 
         result.first = null;
         result.point = null;
 
-        for (Task it : this)
+        for (Task it : this) {
             result.add(it.clone());
-
+        }
         return result;
     }
 

@@ -1,20 +1,17 @@
 package tasks;
+
 import java.util.*;
 
 /**
  * class to work with collections of tasks
  * @author Sasha Kostyan
  * @version %I%, %G%
- * @updated 17-дек-2015 22:26:45
  */
-
 public class Tasks {
     /**
-     *
      * method that returns a subset of the tasks that
-     * are scheduled to perform in the interval
-     *
-     *do not depend from array or list class
+     * are scheduled to perform in the interval.
+     *Do not depend from array or list class
      *
      * @param tasks iterable of list
      * @param start date from which you want to search
@@ -23,9 +20,9 @@ public class Tasks {
      */
     public static Iterable<Task> incoming(Iterable<Task> tasks, Date start, Date end) {
         TaskList inlist = new ArrayTaskList();
+
         for (Task arr : tasks ) {
-            //nextTimeAfter can return null
-            Date aftStart = arr.nextTimeAfter(start);
+            Date aftStart = arr.nextTimeAfter(start);                       //nextTimeAfter can return null
             if (aftStart != null && (aftStart.before(end) || aftStart.equals(end)))
                 inlist.add(arr);
         }
@@ -43,17 +40,19 @@ public class Tasks {
     public static SortedMap<Date, Set<Task>> calendar(Iterable<Task> tasks, Date start, Date end) {
         Date day;
         SortedMap<Date, Set<Task>> smap = new TreeMap<>();
+
         for (Task arr : tasks) {
             day = arr.nextTimeAfter(start);
+
             while(day != null && (day.before(end) || day.equals(end)) ) {
                 if (!smap.containsKey(day)) {
                     smap.put(day, new HashSet<Task>());
                 }
+
                 smap.get(day).add(arr);
                 day = arr.nextTimeAfter(day);
             }
         }
         return smap;
     }
-
 }

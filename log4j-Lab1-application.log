@@ -113,3 +113,34 @@
 2016-01-03 12:16:39 INFO  Model:124 - task edit success
 2016-01-03 12:18:53 INFO  Model:25 - initialization task success
 2016-01-03 12:27:05 INFO  Model:25 - initialization task success
+2016-01-03 12:39:09 INFO  Model:25 - initialization task success
+2016-01-03 15:55:30 INFO  Model:24 - initialization task success
+2016-01-03 15:55:40 INFO  Model:24 - initialization task success
+2016-01-03 15:59:05 INFO  Model:24 - initialization task success
+2016-01-03 15:59:31 INFO  Model:24 - initialization task success
+2016-01-03 16:01:46 INFO  Model:24 - initialization task success
+2016-01-03 16:03:29 INFO  Model:24 - initialization task success
+2016-01-03 16:04:05 INFO  Model:24 - initialization task success
+2016-01-03 16:13:08 INFO  Model:24 - initialization task success
+2016-01-03 16:13:30 INFO  Model:24 - initialization task success
+2016-01-03 16:19:16 INFO  Model:24 - initialization task success
+2016-01-03 16:20:08 INFO  Model:24 - initialization task success
+2016-01-03 16:24:44 INFO  Model:24 - initialization task success
+2016-01-03 16:28:24 INFO  Model:24 - initialization task success
+2016-01-03 16:28:30 INFO  Model:24 - initialization task success
+2016-01-03 16:32:42 INFO  Model:24 - initialization task success
+2016-01-03 16:35:04 INFO  Model:67 - Task remove success
+2016-01-03 16:45:03 INFO  Model:24 - initialization task success
+2016-01-03 16:46:48 INFO  Model:67 - Task remove success
+2016-01-03 16:46:48 INFO  Model:80 - tass add
+2016-01-03 16:46:48 INFO  Model:184 - task edit success
+2016-01-03 16:49:11 INFO  Model:24 - initialization task success
+2016-01-03 16:49:33 INFO  Model:67 - Task remove success
+2016-01-03 16:50:11 INFO  Model:24 - initialization task success
+2016-01-03 17:01:38 DEBUG Model:26 - initialization  task error in class ModelD:\УЧЕБА ДЛЯ МЕНЯ\КУРСЫ JAVA\Lab1_Tasks\Preference.xml (Не удается найти указанный файл)
+2016-01-03 17:02:46 INFO  Model:24 - initialization task success
+2016-01-03 17:03:30 INFO  Model:24 - initialization task success
+2016-01-03 17:03:47 INFO  Model:24 - initialization task success
+2016-01-04 18:26:13 INFO  Model:30 - initialization task success
+2016-01-04 18:35:50 INFO  Model:30 - initialization task success
+2016-01-04 18:36:05 INFO  Model:30 - initialization task success

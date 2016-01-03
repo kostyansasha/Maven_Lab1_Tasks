@@ -8,15 +8,11 @@ import java.util.NoSuchElementException;
  * array list
  * @author Sasha Kostyan
  * @version %I%, %G%
- * @updated 17-дек-2015 22:26:44
+ * @updated 17-DEC-2015 22:26:44
  */
-
 public class ArrayTaskList extends TaskList implements Cloneable, Serializable {
-
-    // variable for size of array
-    private int numberOfSizeArrayTask;
-    // create array of tasks
-    private Task arrayTask[] /*= new Task[numberOfSizeArrayTask]*/;
+    private int numberOfSizeArrayTask;  // variable for size of array
+    private Task arrayTask[];           // create array of tasks
 
     /**
      * method that add to the list of task
@@ -24,10 +20,9 @@ public class ArrayTaskList extends TaskList implements Cloneable, Serializable {
      * @param task that need add
       */
     public void add(Task task)  {
-        // copy old array in new
-        Task tempArrayTask[] = new Task[numberOfSizeArrayTask + 1];
+        Task tempArrayTask[] = new Task[numberOfSizeArrayTask + 1]; // copy old array in new
 
-        for (int i=0; i < numberOfSizeArrayTask; i++)
+        for (int i=0; i < numberOfSizeArrayTask; i++)               // copy old array in new
                 tempArrayTask[i] = arrayTask[i];
 
         tempArrayTask[numberOfSizeArrayTask] = task;
@@ -47,13 +42,14 @@ public class ArrayTaskList extends TaskList implements Cloneable, Serializable {
         if (task == null)
             throw new Exception("incoming task is null");
 
-        int i; // to find a match for the entire array
-        int j; // to move an item after the first found
-        boolean itemFound; //status delete
+        int i;                                          // to find a match for the entire array
+        int j;                                          // to move an item after the first found
+        boolean itemFound;                              //status delete
         itemFound = false;
 
-        for (i = 0; i < numberOfSizeArrayTask; i++) { //Not ArrayTask.length-1!
+        for (i = 0; i < numberOfSizeArrayTask; i++) {   //Not ArrayTask.length-1!
             if (task.equals(arrayTask[i])) {
+
                 // delete the last element
                 if (i == numberOfSizeArrayTask-1) {
                     arrayTask[i] = null;
@@ -100,7 +96,6 @@ public class ArrayTaskList extends TaskList implements Cloneable, Serializable {
      * @return number Of Size ArrayTask
      */
     public int size() {
-
         return numberOfSizeArrayTask;
     }
 
@@ -116,20 +111,17 @@ public class ArrayTaskList extends TaskList implements Cloneable, Serializable {
     }
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
     public Iterator<Task> iterator() {
-
         return new MyIterator();
     }
 
     private class MyIterator implements Iterator<Task> {
-        int cursor;       // index of next element to return
-        int lastRet = -1; // index of last element returned; -1 if no such
+        int cursor;                                 // index of next element to return
+        int lastRet = -1;                           // index of last element returned; -1 if no such
 
 
         public boolean hasNext() {
-            return cursor < numberOfSizeArrayTask; //ArrayTaskList.this.numberOfSizeArrayTask
-
+            return cursor < numberOfSizeArrayTask;  //ArrayTaskList.this.numberOfSizeArrayTask
         }
 
         public Task next() {
@@ -148,8 +140,9 @@ public class ArrayTaskList extends TaskList implements Cloneable, Serializable {
         }
 
         public void remove() {
-            if (lastRet < 0)
+            if (lastRet < 0) {
                 throw new IllegalStateException();
+            }
 
             try {
                 ArrayTaskList.this.remove(getTask(lastRet));
