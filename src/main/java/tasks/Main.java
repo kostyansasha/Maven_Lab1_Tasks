@@ -10,7 +10,9 @@ public class Main {
         Controller c = new Controller();
         Thread t = new Thread(c);
 
-        t.start(); //Thread for reminders
-        c.start(); //work with console
+        t.setDaemon(true);
+        t.start();                      //Thread for reminders
+
+        c.start();                      //work with console
     }
 }
