@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import org.apache.log4j.Logger;
 
 /**
  * Class that produce pattern MVC
@@ -12,6 +13,7 @@ import java.util.*;
  * @version %I%, %G%
  */
 public class Controller implements Runnable{
+    static  Logger  log = Logger.getLogger(Controller.class);
     private Model   model;
     private View    view;
     private Scanner br;
@@ -20,6 +22,7 @@ public class Controller implements Runnable{
         this.model = new Model();
         this.view = new View(this);
         br = new Scanner(System.in);
+        log.info("initialization Controller success");
     }
 
     /**
@@ -172,7 +175,7 @@ public class Controller implements Runnable{
             } catch (ParseException e) {
                 System.out.println("not correct format date");
             } catch (Exception e) {
-                Model.log.error("task create err " + e);
+                log.error("task create err " + e);
             }
         } else {
             try {
@@ -181,7 +184,7 @@ public class Controller implements Runnable{
             } catch (ParseException e) {
                 System.out.println("not correct format date");
             } catch (Exception e) {
-                Model.log.error("task create err " + e);
+                log.error("task create err " + e);
             }
         }
 
@@ -211,9 +214,9 @@ public class Controller implements Runnable{
         try {
             model.remove(i);
             model.addTask(task);
-            Model.log.info("task edit success");
+            log.info("task edit success");
         } catch (Exception e) {
-            Model.log.error("task edit err" + e);
+            log.error("task edit err" + e);
         }
     }
 
@@ -233,7 +236,8 @@ public class Controller implements Runnable{
                 if (next != null) {
                     Date occ = new Date(current.getTime() + 60 * 1000);
                     if (occ.compareTo(next) >= 0) {
-                        System.out.println("you have task after one hour " + task.toString());
+                        System.out.println("you have task after one hour at " + task.nextTimeAfter(current).toString()
+                                + " in " + task.toString());
                     }
                 }
             }
@@ -241,7 +245,7 @@ public class Controller implements Runnable{
             try {
                 Thread.sleep(60000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
         }
     }
