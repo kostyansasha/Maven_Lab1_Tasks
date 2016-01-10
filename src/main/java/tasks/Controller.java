@@ -225,18 +225,40 @@ public class Controller implements Runnable{
      */
     @Override
     public void run() {
-        Date current;
 
         while (true) {
-            current = new Date(System.currentTimeMillis() + 3600 * 1000);
+            long current = System.currentTimeMillis();
 
             for (Task task : model.getTasks()) {
-                Date next = task.nextTimeAfter(current);
+                Date afterTime = new Date(current + 3600 * 1000);                //one hour
+                Date next = task.nextTimeAfter(afterTime);
 
                 if (next != null) {
-                    Date occ = new Date(current.getTime() + 60 * 1000);
+                    Date occ = new Date(afterTime.getTime() + 60 * 1000);
+                    if (occ.compareTo(next) >= 0 /*occ.equals(next) || occ.after(next)*/) {
+                        System.out.println("you have task after  one  hour at " + next.toString()
+                                + " in " + task.toString());
+                    }
+                }
+
+                afterTime = new Date(current + 600 * 1000);                       //10 minutes
+                next = task.nextTimeAfter(afterTime);
+
+                if (next != null) {
+                    Date occ = new Date(afterTime.getTime() + 60 * 1000);
                     if (occ.compareTo(next) >= 0) {
-                        System.out.println("you have task after one hour at " + task.nextTimeAfter(current).toString()
+                        System.out.println("you have task after 10 minutes at " + next.toString()
+                                + " in " + task.toString());
+                    }
+                }
+
+                afterTime = new Date(current + 60 * 1000);                        //1 minute
+                next = task.nextTimeAfter(afterTime);
+
+                if (next != null) {
+                    Date occ = new Date(afterTime.getTime() + 60 * 1000);
+                    if (occ.compareTo(next) >= 0) {
+                        System.out.println("you have task after  1 minute  at " + next.toString()
                                 + " in " + task.toString());
                     }
                 }

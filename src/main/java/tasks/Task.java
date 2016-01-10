@@ -284,7 +284,7 @@ public class Task implements Cloneable, Serializable {
         StringBuilder t = new StringBuilder();
 
         if (repeat) {
-            t.append("Task{ ").append("title='").append(title).append(", start=").append(start)
+            t.append("Task{ ").append("title='").append(title).append("', start=").append(start)
                     .append(", end=").append(end).append(", interval=").append(interval).append(", active=")
                     .append(active).append(", repeat=").append(repeat).append('}');
         } else {

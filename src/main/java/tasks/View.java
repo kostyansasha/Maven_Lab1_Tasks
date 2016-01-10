@@ -3,6 +3,7 @@ package tasks;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -103,7 +104,11 @@ public class View {
         int     interval = 0; //
 
         System.out.println("write new name");
-        String name = scan.nextLine();
+        String name = "";
+        while (name.equals("")) {
+            name = scan.nextLine();
+            name = name.trim();
+        }
         System.out.println("write start time");
         System.out.println("number format: " + dateFormat);
 
@@ -124,9 +129,15 @@ public class View {
                 end = scan.nextLine();
             }
 
-            System.out.println(" vvod interval");
-            while (interval <= 0)
-                interval = scan.nextInt();
+            System.out.println(" vvod interval (seconds)");
+            while (interval <= 0) {
+                try {
+                    interval = scan.nextInt();
+                } catch (InputMismatchException e) {
+                    scan.nextLine();
+                    interval = 0;
+                }
+            }
         }
 
         System.out.println("if task active write y, else n");
@@ -181,7 +192,12 @@ public class View {
             choose = scan.nextLine();
             if (choose.equals("2en")) {//name
                 System.out.println("write new name");
-                task.setTitle(scan.nextLine());
+                String name = "";
+                while (name.equals("")) {
+                    name = scan.nextLine();
+                    name = name.trim();
+                }
+                task.setTitle(name);
             }
 
             if (choose.equals("2ed")) {
@@ -215,11 +231,16 @@ public class View {
                 }
 
                 if (choose.equals("2ei")) {
-                    System.out.println(" write interval");
-
                     int interval = 0;
+                    System.out.println(" vvod interval (seconds)");
+
                     while (interval <= 0) {
-                        interval = scan.nextInt();
+                        try {
+                            interval = scan.nextInt();
+                        } catch (InputMismatchException e) {
+                            scan.nextLine();
+                            interval = 0;
+                        }
                     }
 
                     task.setTime(task.getTime(), task.getEndTime(), interval);
